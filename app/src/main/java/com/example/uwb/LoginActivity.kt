@@ -30,37 +30,41 @@ class LoginActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 LoginScreen(
-                    onLoginSuccess = {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
+                    onLogin = { email, password ->
+                        signInWithEmail(email, password)
                     },
-                    onSignUp = { email, password ->
-                        signUpWithEmail(email, password)
+                    onSignUp = {
+                        // 회원가입 화면으로 이동
+                        startActivity(Intent(this, SignUpActivity::class.java))
                     }
                 )
             }
         }
     }
 
-    // 회원가입 로직
-    private fun signUpWithEmail(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
+    // 로그인 로직
+    private fun signInWithEmail(email: String, password: String) {
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "이메일과 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                    // 회원가입 성공 시 로그인 후 MainActivity로 이동
+                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    // 로그인 성공 시 MainActivity로 이동
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 } else {
-                    Toast.makeText(this, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "로그인 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 }
 
 @Composable
-fun LoginScreen(onLoginSuccess: () -> Unit, onSignUp: (String, String) -> Unit) {
-    val context = LocalContext.current
+fun LoginScreen(onLogin: (String, String) -> Unit, onSignUp: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -91,7 +95,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignUp: (String, String) -> Unit) 
         // 로그인 버튼
         Button(
             onClick = {
-                onLoginSuccess() // 로그인 로직 추가 필요
+                onLogin(email, password) // 로그인 로직 실행
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -103,7 +107,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignUp: (String, String) -> Unit) 
         // 회원가입 버튼
         Button(
             onClick = {
-                onSignUp(email, password) // 회원가입 버튼 클릭 시 실행
+                onSignUp() // 회원가입 화면으로 이동
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -116,6 +120,6 @@ fun LoginScreen(onLoginSuccess: () -> Unit, onSignUp: (String, String) -> Unit) 
 @Composable
 fun LoginScreenPreview() {
     MaterialTheme {
-        LoginScreen(onLoginSuccess = {}, onSignUp = { _, _ -> })
+        LoginScreen(onLogin = { _, _ -> }, onSignUp = {})
     }
 }

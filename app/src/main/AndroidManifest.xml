@@ -25,6 +25,14 @@
             </intent-filter>
         </activity>
 
+        <!-- SignUpActivity 선언 -->
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Uwb">
+        </activity>
+
         <!-- MainActivity는 로그인 후에 사용 -->
         <activity
             android:name=".MainActivity"
