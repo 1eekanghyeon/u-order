@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 기본 Material2 Light 테마 사용 -->
+    <style name="Theme.Uwb" parent="Theme.MaterialComponents.Light.NoActionBar" />
+
+</resources>

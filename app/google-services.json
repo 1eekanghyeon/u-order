@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "226741643868",
+    "project_id": "u-order-23d58",
+    "storage_bucket": "u-order-23d58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226741643868:android:d4a2b34d530114162c1499",
+        "android_client_info": {
+          "package_name": "com.example.uwb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzyxw4ZD3o9k2DAY7Di0kS_pXqwuRGFC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
